@@ -13,6 +13,9 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+
   </head>
   <body ng-app="outofviewBusStopApp">
     <!--[if lt IE 7]>
@@ -22,18 +25,14 @@
     <!-- Add your site or application content here -->
     <div class="container">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">outofviewBusStop</h3>
+        <h3 class="text-muted">'Out Of View' Bus Stop App</h3>
       </div>
 
-      <div ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
+      <div class="container" ng-view=""></div>
+      <!--<div ng-include="'views/main.html'" ng-controller="MainCtrl"></div>-->
 
       <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <p><span class="glyphicon glyphicon-user"></span> Created by Dennis Lo</p>
       </div>
     </div>
 
@@ -75,12 +74,16 @@
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/mainController.js"></script>
+        <script src="scripts/directives/instructionsDirective.js"></script>
+        <script src="scripts/directives/mapDirective.js"></script>
         <!-- endbuild -->
 </body>
 </html>
