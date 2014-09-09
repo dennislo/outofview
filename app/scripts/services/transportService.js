@@ -36,8 +36,9 @@ angular.module('outofviewBusStopApp')
     }
 
     function _createBusStopsResponse(data) {
-      var result = data.stops;
-      //... do more data munging if required here ...
+      var result = {};
+      result.busStops = data.stops;
+      result.searchLocation = {lat: data.searchlat, lng: data.searchlon };
       return result;
     }
 

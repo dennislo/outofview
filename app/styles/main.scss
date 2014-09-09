@@ -3,6 +3,12 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+
+// Variables
+$primaryColor: #FF5A00;
+$text: #404040;
+
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -91,6 +97,22 @@ body {
   }
 }
 
+
+
+
 .map-container { height: 500px; }
 
 #mapCanvas { height: 100%; width: 100% }
+
+.mapPopup {
+  color: $text;
+  display: block;
+  white-space: nowrap;
+  a {
+    color: $primaryColor;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

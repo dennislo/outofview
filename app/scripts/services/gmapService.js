@@ -10,75 +10,172 @@
 angular.module('outofviewBusStopApp')
   .service('gmapService', [function () {
 
-    function _createRedDot(departures) {
+    var WidgetMap = function () {
+      this.map = {};
+      this.mapOptions = {};
 
-      for (var busNumber in departures) {
+      this.redDots = [];
 
-        var busDepatures = departures[busNumber];
+      this.infoWindow = {};
+      this.infoTitleWindow = {};
 
-        for (var i = 0; i < busDepatures.length; i++) {
-          var departure = busDepatures[i];
+      //map defaults to centre of London
+      this.centreLat = 51.5072;
+      this.centreLng = 0.1275;
+      this.defaultZoomLevel = 8;
+    };
 
-          var redDot = createMarkerInfoData(widgetMap, departure, i);
+    function _initializeMap() {
+      var widgetMap = new WidgetMap();
 
-          var redDotContent = createMarkerBubbleHtml(redDot);
+      var mapOptions = {
+        center: new google.maps.LatLng(widgetMap.centreLat, widgetMap.centreLng),
+        zoom: widgetMap.defaultZoomLevel,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
 
-          var redDotOptions = {
-            position: redDot.latLng,
-            icon: 'markers/mapRedDot.png',
-            title: redDot.siteName ? '' : redDot.siteName,
-            content: redDotContent,
-            hoverContent: createMarkerHoverHtml(redDot)
-          };
+      widgetMap.mapOptions = mapOptions;
 
-          var redDotMarker = createMarker(widgetMap, redDotOptions, widgetMap.map);
-          widgetMap.redDots.push(redDotMarker);
+      //create new map
+      widgetMap.map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 
-          redDotMarker.setMap(widgetMap.map);  //add red dot to map
-        }
+      widgetMap.infoWindow = new google.maps.InfoWindow();
+      widgetMap.infoTitleWindow = new google.maps.InfoWindow();
 
+      google.maps.event.addListener(widgetMap.map, 'click', function () {
+        _closeInfoWindows(widgetMap);
+      });
+
+      return widgetMap;
+    }
+
+    function _createRedDot(widgetMap, busStopsResponse) {
+
+      for (var i = 0; i < busStopsResponse.busStops.length; i++) {
+        var busStop = busStopsResponse.busStops[i];
+
+        var redDot = _createMarkerInfoData(busStop);
+
+        var redDotContent = _createMarkerBubbleHtml(redDot);
+
+        var redDotOptions = {
+          position: redDot.latLng,
+          icon: 'markers/mapRedDot.png',
+          title: redDot.name ? '' : redDot.name,
+          content: redDotContent,
+          hoverContent: _createMarkerHoverHtml(redDot)
+        };
+
+        var redDotMarker = _createMarker(widgetMap, redDotOptions, widgetMap.map);
+        widgetMap.redDots.push(redDotMarker);
+
+        redDotMarker.setMap(widgetMap.map);  //add red dot to map
       }
+
+      fitAllMarkers(widgetMap, busStopsResponse.searchLocation); //try fit all red dots on screen
 
     }
 
-    function createMarkerInfoData(widgetMap, departure, siteIndex) {
+    function _createMarkerInfoData(busStop) {
       var markerData = {};
 
       //build info bubble content
-      markerData.siteIndex = siteIndex;
-      markerData.siteId = departure.SiteID;
-      markerData.ssId = departure.SSID;
-      markerData.siteName = departure.SiteName;
+      markerData.atcocode = busStop.atcocode;
+      markerData.smscode = busStop.smscode;
+      markerData.name = busStop.name;
+      markerData.mode = busStop.mode;
+      markerData.bearing = busStop.bearing;
+      markerData.locality = busStop.locality;
+      markerData.indicator = busStop.indicator;
+      markerData.distance = busStop.distance;
 
-      markerData.addressLine1 = departure.AddressLine1;
-      markerData.addressLine2 = departure.AddressLine2;
-
-      markerData.phone = departure.Phone;
-
-      markerData.latLng = new google.maps.LatLng(departure.Latitude, departure.Longitude);
+      markerData.latLng = new google.maps.LatLng(busStop.latitude, busStop.longitude);
 
       return markerData;
     }
 
-    function createMarkerBubbleHtml(marker) {
+    function _createMarkerBubbleHtml(marker) {
       var bubbleHtml;
 
-      bubbleHtml = '<div class="mapPopup"><strong>' + marker.siteName +
-        '</strong><br>' + marker.addressLine1 + ' <br> ' + marker.addressLine2 +
-        ' <br>Phone: ' + marker.phone + ' <br><a  href="#/details/' + marker.siteId +
-        '/' + marker.ssId + '/' + marker.siteIndex +
-        '" class="service-details-modal">View details</a></div>';
+      bubbleHtml = '<div class="mapPopup"><strong>' + marker.name +
+        '</strong><br>' + marker.locality + ' ' + marker.bearing +
+        ' <br>Indictor: ' + marker.indicator +
+        ' <br>Distance: ' + marker.distance + '<br><a href="#/details/" class="service-details-modal">View Departures</a></div>';
 
       return bubbleHtml;
     }
 
-    function createMarkerHoverHtml(marker) {
-      return '<div class="mapPopup"><strong>' + marker.siteName + '</strong></div>';
+    function _createMarkerHoverHtml(marker) {
+      return '<div class="mapPopup"><strong>' + marker.name + '</strong></div>';
+    }
+
+    //create a single marker to map
+    function _createMarker(widgetMap, options, map) {
+      var marker = new google.maps.Marker(options);
+
+      //wire up maker hover handler to open info title window
+      google.maps.event.addListener(marker, 'mouseover', function () {
+        widgetMap.infoTitleWindow.setContent(options.hoverContent);
+        widgetMap.infoTitleWindow.open(map, marker);
+      });
+
+      google.maps.event.addListener(marker, 'mouseout', function () {
+        widgetMap.infoTitleWindow.close();
+      });
+
+      //wire up marker click handler to open info window
+      google.maps.event.addListener(marker, 'click', function () {
+        widgetMap.infoWindow.setContent(options.content);
+        widgetMap.infoWindow.open(map, marker);
+        widgetMap.infoTitleWindow.close();
+      });
+
+      return marker;
+    }
+
+    //resize map to fit all red dot markers
+    function fitAllMarkers(widgetMap, searchLocation) {
+      if (widgetMap.redDots && widgetMap.redDots.length > 0) {
+        var centerLat = searchLocation.lat;
+        var centerLng = searchLocation.lng;
+        var centerLatLng = new google.maps.LatLng(centerLat, centerLng);
+        var farMarkerLat = widgetMap.redDots[widgetMap.redDots.length - 1].getPosition().lat();
+        var farMarkerLng = widgetMap.redDots[widgetMap.redDots.length - 1].getPosition().lng();
+
+        var redDotMarkerBounds = new google.maps.Circle({center: centerLatLng, radius: getRadius(farMarkerLat, farMarkerLng, centerLat, centerLng)}).getBounds();
+
+        //increase bounds to take this point
+        for (var i = 0; i < widgetMap.redDots.length; i++) {
+          redDotMarkerBounds.extend(widgetMap.redDots[i].getPosition());
+        }
+
+        //fit all push pin bounds to map
+        widgetMap.map.fitBounds(redDotMarkerBounds);
+      }
+    }
+
+    function _closeInfoWindows(widgetMap) {
+      widgetMap.infoWindow.close();
+    }
+
+    function getRadius(centerLat, centerLng, farMarkerLat, farMarkerLng) {
+      var R = 6371; // approx. radius of the earth in km
+      var dLat = deg2rad(farMarkerLat - centerLat);
+      var dLon = deg2rad(farMarkerLng - centerLng);
+      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(farMarkerLat)) * Math.cos(deg2rad(centerLat)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return ((R * c) * 1000); //return distance in metres
+    }
+
+    function deg2rad(deg) {
+      return deg * (Math.PI / 180);
     }
 
     return {
-      initializeMap: function (mapElementId) {
-        return initializeMapHelper(mapElementId);
+      initializeMap: function () {
+        return _initializeMap();
       },
       createRedDots: function (widgetMap, services) {
         return _createRedDot(widgetMap, services);
@@ -88,4 +185,5 @@ angular.module('outofviewBusStopApp')
       }
     };
 
-  }]);
+  }])
+;
