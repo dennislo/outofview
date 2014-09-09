@@ -1,0 +1,105 @@
+{
+  "atcocode": "490000169K",
+  "smscode": "55459",
+  "request_time": "2014-09-09T21:57:53+01:00",
+  "departures": {
+    "55": [
+      {
+        "mode": "bus",
+        "line": "55",
+        "direction": "Bakers Arms",
+        "operator": "TFL",
+        "aimed_departure_time": null,
+        "expected_departure_time": "21:58",
+        "best_departure_estimate": "21:58",
+        "source": "Countdown instant"
+      },
+      {
+        "mode": "bus",
+        "line": "55",
+        "direction": "Bakers Arms",
+        "operator": "TFL",
+        "aimed_departure_time": null,
+        "expected_departure_time": "22:06",
+        "best_departure_estimate": "22:06",
+        "source": "Countdown instant"
+      },
+      {
+        "mode": "bus",
+        "line": "55",
+        "direction": "Bakers Arms",
+        "operator": "TFL",
+        "aimed_departure_time": null,
+        "expected_departure_time": "22:15",
+        "best_departure_estimate": "22:15",
+        "source": "Countdown instant"
+      }
+    ],
+    "135": [
+      {
+        "mode": "bus",
+        "line": "135",
+        "direction": "Crossharbour",
+        "operator": "TFL",
+        "aimed_departure_time": null,
+        "expected_departure_time": "22:06",
+        "best_departure_estimate": "22:06",
+        "source": "Countdown instant"
+      },
+      {
+        "mode": "bus",
+        "line": "135",
+        "direction": "Crossharbour",
+        "operator": "TFL",
+        "aimed_departure_time": null,
+        "expected_departure_time": "22:21",
+        "best_departure_estimate": "22:21",
+        "source": "Countdown instant"
+      }
+    ],
+    "205": [
+      {
+        "mode": "bus",
+        "line": "205",
+        "direction": "Bow Church",
+        "operator": "TFL",
+        "aimed_departure_time": null,
+        "expected_departure_time": "22:15",
+        "best_departure_estimate": "22:15",
+        "source": "Countdown instant"
+      },
+      {
+        "mode": "bus",
+        "line": "205",
+        "direction": "Bow Church",
+        "operator": "TFL",
+        "aimed_departure_time": null,
+        "expected_departure_time": "22:26",
+        "best_departure_estimate": "22:26",
+        "source": "Countdown instant"
+      }
+    ],
+    "243": [
+      {
+        "mode": "bus",
+        "line": "243",
+        "direction": "Wood Green",
+        "operator": "TFL",
+        "aimed_departure_time": null,
+        "expected_departure_time": "22:23",
+        "best_departure_estimate": "22:23",
+        "source": "Countdown instant"
+      },
+      {
+        "mode": "bus",
+        "line": "243",
+        "direction": "Wood Green",
+        "operator": "TFL",
+        "aimed_departure_time": null,
+        "expected_departure_time": "22:26",
+        "best_departure_estimate": "22:26",
+        "source": "Countdown instant"
+      }
+    ]
+  }
+}

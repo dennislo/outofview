@@ -7,7 +7,7 @@
  * # mapDirective
  */
 angular.module('outofviewBusStopApp')
-  .directive('mapDirective', function () {
+  .directive('mapDirective', ['$timeout', function ($timeout) {
     return {
       templateUrl: '/views/templates/map.html',
       restrict: 'E',
@@ -21,8 +21,11 @@ angular.module('outofviewBusStopApp')
           var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
         }
 
-        google.maps.event.addDomListener(window, 'load', initialize);
+        $timeout(function () {
+          initialize(); //wait until directive dom ready before injecting google map
+        });
+
 
       }
     };
-  });
+  }]);
