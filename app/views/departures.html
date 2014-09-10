@@ -1,0 +1,41 @@
+<a href="#/">< Search Again</a>
+
+<h1>Departures for Bus Stop ID: {{busStopId}}</h1>
+
+<br/>
+
+<h4>Your selected Bus Stop was:</h4>
+<div class="selectedBusStop">
+<span>Name:</span> {{selectedBusStop.name}}<br>
+<span>SMS Code:</span> {{selectedBusStop.smscode}}<br>
+<span>Bearing:</span> {{selectedBusStop.bearing}}<br>
+<span>Locality:</span> {{selectedBusStop.locality}}<br>
+<span>Indicator:</span> {{selectedBusStop.indicator}}<br>
+<span>Distance:</span> {{selectedBusStop.distance}} miles
+</div>
+
+<hr class="thick"/>
+
+<div class="row marketing">
+
+  <div ng-repeat="(busNumber, departureDetails) in departures">
+
+    <div ng-repeat="detail in departureDetails">
+      <br/>
+      <strong>Bus Number</strong>: {{busNumber}}<br/>
+      Mode: {{detail.mode}} <br/>
+      Line: {{detail.line}} <br/>
+      Direction: {{detail.direction}} <br/>
+      Operator: {{detail.operator}} <br/>
+      <em>Expected Departure Time</em>: {{detail.expected_departure_time}} <br/>
+      <em>Best Departure Time</em>: {{detail.best_departure_estimate}} <br/>
+      <em>Source</em>: {{detail.source}}
+    </div>
+
+    <br/>
+
+    <hr class="thick"/>
+
+  </div>
+
+</div>

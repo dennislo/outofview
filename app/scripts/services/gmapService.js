@@ -99,8 +99,9 @@ angular.module('outofviewBusStopApp')
 
       bubbleHtml = '<div class="mapPopup"><strong>' + marker.name +
         '</strong><br>' + marker.locality + ' ' + marker.bearing +
-        ' <br>Indictor: ' + marker.indicator +
-        ' <br>Distance: ' + marker.distance + '<br><a href="#/details/" class="service-details-modal">View Departures</a></div>';
+        ' <br><em>Indicator:</em> ' + marker.indicator +
+        ' <br><em>Distance:</em> ' + marker.distance + ' miles<br><a href="#/departures/' +
+        marker.atcocode + '" class="service-details-modal">View Departures</a></div>';
 
       return bubbleHtml;
     }
@@ -142,7 +143,7 @@ angular.module('outofviewBusStopApp')
         var farMarkerLat = widgetMap.redDots[widgetMap.redDots.length - 1].getPosition().lat();
         var farMarkerLng = widgetMap.redDots[widgetMap.redDots.length - 1].getPosition().lng();
 
-        var redDotMarkerBounds = new google.maps.Circle({center: centerLatLng, radius: getRadius(farMarkerLat, farMarkerLng, centerLat, centerLng)}).getBounds();
+        var redDotMarkerBounds = new google.maps.Circle({center: centerLatLng, radius: _getRadius(farMarkerLat, farMarkerLng, centerLat, centerLng)}).getBounds();
 
         //increase bounds to take this point
         for (var i = 0; i < widgetMap.redDots.length; i++) {
@@ -158,18 +159,18 @@ angular.module('outofviewBusStopApp')
       widgetMap.infoWindow.close();
     }
 
-    function getRadius(centerLat, centerLng, farMarkerLat, farMarkerLng) {
+    function _getRadius(centerLat, centerLng, farMarkerLat, farMarkerLng) {
       var R = 6371; // approx. radius of the earth in km
-      var dLat = deg2rad(farMarkerLat - centerLat);
-      var dLon = deg2rad(farMarkerLng - centerLng);
+      var dLat = _deg2rad(farMarkerLat - centerLat);
+      var dLon = _deg2rad(farMarkerLng - centerLng);
       var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(deg2rad(farMarkerLat)) * Math.cos(deg2rad(centerLat)) *
+        Math.cos(_deg2rad(farMarkerLat)) * Math.cos(_deg2rad(centerLat)) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       return ((R * c) * 1000); //return distance in metres
     }
 
-    function deg2rad(deg) {
+    function _deg2rad(deg) {
       return deg * (Math.PI / 180);
     }
 

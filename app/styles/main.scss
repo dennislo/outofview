@@ -7,7 +7,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // Variables
 $primaryColor: #FF5A00;
 $text: #404040;
-
+$selectedText: #8AC007;
 
 .browsehappy {
   margin: 0.2em 0;
@@ -115,4 +115,12 @@ body {
       text-decoration: underline;
     }
   }
+}
+
+.thick {
+  border-top: 3px solid #eeeeee;
+}
+
+div.selectedBusStop span{
+  color: $selectedText;
 }

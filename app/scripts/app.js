@@ -21,6 +21,10 @@ angular.module('outofviewBusStopApp', [
         templateUrl: '../views/main.html',
         controller: 'MainController'
       })
+      .when('/departures/:atcocode', {
+        templateUrl: '../views/departures.html',
+        controller: 'DeparturesController'
+      })
       .otherwise({
         redirectTo: '/'
       });

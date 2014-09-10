@@ -42,10 +42,10 @@ angular.module('outofviewBusStopApp')
       return result;
     }
 
-    function _getDepatures(busAtcoCode) {
+    function _getDepartures(busAtcoCode) {
       //Call transport API to get departures by AtcoCode
       var url = 'http://transportapi.com/v3/uk/bus/stop/' + busAtcoCode + '/live.json';
-      url = '/scripts/mocks/snoreditch490000169KDepartures.json';
+      url = '/scripts/mocks/snoreditch490000169KDepartures.json'; //required since CORS not supported by transport API
 
       var requestParameters = {
         group: 'route',
@@ -65,7 +65,7 @@ angular.module('outofviewBusStopApp')
     }
 
     function _createDepaturesResponse(data) {
-      var result = data.depatures;
+      var result = data.departures;
       //... do more data munging if required here ...
       return result;
     }
@@ -74,6 +74,9 @@ angular.module('outofviewBusStopApp')
       //exposed functions for public consumption
       getBusStops: function (latLng) {
         return _getBusStops(latLng)
+      },
+      getDepartures: function (busAtcoCode) {
+        return _getDepartures(busAtcoCode);
       }
     };
 
