@@ -6,19 +6,22 @@ NOTE: Transport API does not have CORS support, therefore app currently uses moc
 
 #How to?
 * Running App
+`
   1. git clone this repo
   2. npm install
   3. bower install
   4. grunt serve
-
+`
   * Once app is started follow the instructions inside app to perform a search for bus stops
 
 * Building 'production ready' package from source
+`
   1. git clone this repo
   2. npm install
   3. bower install
   4. grunt build
-  5. copy 'dist' folder output to your web server
+`
+  * copy 'dist' folder output to your web server
 
 #Technologies Used
 * HTML5: session storage
