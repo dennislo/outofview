@@ -8,17 +8,14 @@
  * Departure Controller of the outofviewBusStopApp
  */
 angular.module('outofviewBusStopApp')
-  .controller('DeparturesController', ['$scope', '$routeParams', 'transportService', 'busStopService', 'storageService',
-    function ($scope, $routeParams, transportService, busStopService, storageService) {
+  .controller('DeparturesController', ['$scope', '$routeParams', 'transportService', 'storageService',
+    function ($scope, $routeParams, transportService, storageService) {
 
       var busAtcoCode = $routeParams['atcocode'];
 
       if (busAtcoCode) {
         $scope.busStopId = busAtcoCode;
-        $scope.selectedBusStop = busStopService.get();
-        if ($.isEmptyObject($scope.selectedBusStop)) {
-          $scope.selectedBusStop = storageService.fetchObject('selectedBusStop');
-        }
+        $scope.selectedBusStop = storageService.fetchObject('selectedBusStop');
 
         transportService.getDepartures(busAtcoCode).then(function (departuresResponse) {
           $scope.departures = departuresResponse;

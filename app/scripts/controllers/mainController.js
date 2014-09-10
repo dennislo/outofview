@@ -8,8 +8,8 @@
  * Main Controller of the outofviewBusStopApp.
  */
 angular.module('outofviewBusStopApp')
-  .controller('MainController', ['$scope', 'geocodeService', 'transportService', 'gmapService', 'busStopService', 'storageService',
-    function ($scope, geocodeService, transportService, gmapService, busStopService, storageService) {
+  .controller('MainController', ['$scope', 'geocodeService', 'transportService', 'gmapService', 'storageService',
+    function ($scope, geocodeService, transportService, gmapService, storageService) {
 
       $scope.searchTerm = '';
 
@@ -45,7 +45,6 @@ angular.module('outofviewBusStopApp')
         var selectedBusStopId = newUrl.params.atcocode;
         for (var i = 0, len = busStops.length; i < len; i++) {
           if (busStops[i].atcocode === selectedBusStopId) {
-            busStopService.set(busStops[i]);
             storageService.saveObject('selectedBusStop', busStops[i]);
             break;
           }
