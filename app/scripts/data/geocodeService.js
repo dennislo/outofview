@@ -36,8 +36,8 @@ angular.module('outofviewBusStopApp')
 
       //Get 1st match for now
       //TODO: eventually add logic to extract better matching lat and lng
-      var viewpointMax = result.maxLat = data.results[0].geometry.viewport.northeast;
-      var viewpointMin = result.maxLat = data.results[0].geometry.viewport.southwest;
+      var viewpointMax = data.results[0].geometry.viewport.northeast;
+      var viewpointMin = data.results[0].geometry.viewport.southwest;
       result.maxLat = viewpointMax.lat;
       result.maxLng = viewpointMax.lng;
       result.minLat = viewpointMin.lat;
@@ -49,7 +49,7 @@ angular.module('outofviewBusStopApp')
     return {
       //exposed functions for public consumption
       doGeocoding: function (searchTerm) {
-        return _doGeocoding(searchTerm)
+        return _doGeocoding(searchTerm);
       }
     };
 

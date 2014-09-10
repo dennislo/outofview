@@ -38,7 +38,7 @@ angular.module('outofviewBusStopApp')
     function _createBusStopsResponse(data) {
       var result = {};
       result.busStops = data.stops;
-      result.searchLocation = {lat: data.searchlat, lng: data.searchlon };
+      result.searchLocation = {lat: data.searchlat, lng: data.searchlon};
       return result;
     }
 
@@ -73,7 +73,7 @@ angular.module('outofviewBusStopApp')
     return {
       //exposed functions for public consumption
       getBusStops: function (latLng) {
-        return _getBusStops(latLng)
+        return _getBusStops(latLng);
       },
       getDepartures: function (busAtcoCode) {
         return _getDepartures(busAtcoCode);

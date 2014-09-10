@@ -31,7 +31,7 @@ angular.module('outofviewBusStopApp', [
 
     function prepareRequestInterceptors() {
 
-      $httpProvider.interceptors.push(['$q', '$log', '$rootScope', function ($q, $log, $rootScope) {
+      $httpProvider.interceptors.push(['$q', '$log', function ($q, $log) {
           return {
             request: function (request) {
               // On request success
