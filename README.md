@@ -20,7 +20,7 @@ Once app is started follow the instructions inside app to perform a search for b
 5. copy 'dist' folder output to your web server
 
 #Technologies Used
-* HTML5: local storage
+* HTML5: session storage
 * CSS3 + SASS
 * ECMAScript 5.1 (Javascript)
 * Yeoman

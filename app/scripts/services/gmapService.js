@@ -180,11 +180,7 @@ angular.module('outofviewBusStopApp')
       },
       createRedDots: function (widgetMap, services) {
         return _createRedDot(widgetMap, services);
-      },
-      getMapOptions: function (widgetMap) {
-        return widgetMap.mapOptions;
       }
     };
 
-  }])
-;
+  }]);

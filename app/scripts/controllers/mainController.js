@@ -19,9 +19,9 @@ angular.module('outofviewBusStopApp')
 
       $scope.doSearch = function () {
 
-        storageService.clearAll();  //flush local storage on every search
+        storageService.clearAll();  //flush session storage on every search
 
-        geocodeService.doGeocoding($scope.searchTerm.toLowerCase())
+        geocodeService.doGeocoding($scope.searchTerm.toLowerCase()) //get geocode of borough or postcode
           .then(function (latLngResponse) {
 
             return transportService.getBusStops(latLngResponse);  //get bus stops by lat and lng

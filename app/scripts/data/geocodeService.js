@@ -34,7 +34,8 @@ angular.module('outofviewBusStopApp')
     function _createGeocodeResponse(data) {
       var result = {maxLat: 0, maxLng: 0, minLat: 0, minLng: 0};
 
-      //TODO: get 1st match for now, eventually add logic to extract better matching lat and lng
+      //Get 1st match for now
+      //TODO: eventually add logic to extract better matching lat and lng
       var viewpointMax = result.maxLat = data.results[0].geometry.viewport.northeast;
       var viewpointMin = result.maxLat = data.results[0].geometry.viewport.southwest;
       result.maxLat = viewpointMax.lat;
